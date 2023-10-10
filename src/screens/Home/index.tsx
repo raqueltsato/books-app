@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Player } from "@lottiefiles/react-lottie-player";
 import SearchInput from "../../components/searchInput";
 import { useSearchBook } from "../../services/books";
-import { BookImage, Container } from "./styles";
+import { BookImage, Button, Container } from "./styles";
 import BooksList from "../../components/booksList";
 import lottie from "../../assets/lottie.json";
 import useDebounce from "../../hooks";
@@ -55,7 +55,7 @@ const Home = () => {
     <Container>
       <SearchInput onChange={(e) => setTerm(e.target.value)} />
       {renderBody}
-      <button onClick={fetchNextPage}>Clique aqui</button>
+      {!!newData.length && <Button onClick={fetchNextPage}>Clique aqui</Button>}
     </Container>
   );
 };
