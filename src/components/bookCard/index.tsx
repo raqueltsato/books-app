@@ -6,14 +6,10 @@ const BookCard = ({
 }: {
   volumeInfo: BookItemResponse["volumeInfo"];
 }): JSX.Element => {
-  const {
-    title,
-    publishedDate,
-    imageLinks: { thumbnail },
-  } = volumeInfo;
+  const { title, publishedDate, imageLinks } = volumeInfo;
   return (
     <CardContainer>
-      <img src={thumbnail} />
+      {imageLinks?.smallThumbnail && <img src={imageLinks.smallThumbnail} />}
       <Title>{title}</Title>
       <SubTitle>{publishedDate}</SubTitle>
     </CardContainer>
