@@ -1,12 +1,15 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { Player } from "@lottiefiles/react-lottie-player";
 import SearchInput from "../../components/searchInput";
 import { useSearchBook } from "../../services/books";
 import { BookImage, Container } from "./styles";
 import BooksList from "../../components/booksList";
-import { BooksResponse } from "../../services/books/types";
+import lottie from "../../assets/lottie.json";
+import useDebounce from "../../hooks";
 
 const Home = () => {
   const [term, setTerm] = useState("");
+  const debouncedSearchQuery = useDebounce(term, 600);
 
   const {
     data,
@@ -15,22 +18,44 @@ const Home = () => {
     refetch,
     hasNextPage,
     isFetchingNextPage,
-  } = useSearchBook(term, { enabled: !!term });
+  } = useSearchBook(debouncedSearchQuery, {
+    enabled: !!debouncedSearchQuery,
+  });
 
-  // if (data) {
-  //   console.log(data);
-  //   const newData = data?.pages[0];
-  //   console.log(newData);
-  // }
+  const newData = useMemo(
+    () =>
+      data?.pages.reduce((acc, current) => [...acc, ...current.items], []) ||
+      [],
+    [data?.pages]
+  );
+
+  useEffect(() => {
+    !!debouncedSearchQuery && refetch();
+  }, [debouncedSearchQuery, refetch]);
+
+  const renderBody = useMemo(() => {
+    if (isLoading) {
+      return (
+        <Player
+          autoplay
+          loop
+          src={lottie}
+          style={{ height: "300px", width: "300px" }}
+        />
+      );
+    }
+    if (newData.length) {
+      return <BooksList items={newData} />;
+    } else {
+      return <BookImage />;
+    }
+  }, [newData, isLoading]);
 
   return (
     <Container>
       <SearchInput onChange={(e) => setTerm(e.target.value)} />
-      {data?.pages[0].items ? (
-        <BooksList items={data?.pages[0].items} />
-      ) : (
-        <BookImage />
-      )}
+      {renderBody}
+      <button onClick={fetchNextPage}>Clique aqui</button>
     </Container>
   );
 };

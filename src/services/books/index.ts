@@ -1,15 +1,14 @@
-import {
-  UseInfiniteQueryOptions,
-  UseQueryOptions,
-  useInfiniteQuery,
-} from "react-query";
+import { UseInfiniteQueryOptions, useInfiniteQuery } from "react-query";
 import { createUseTermKey } from "./keys";
 import { BooksResponse } from "./types";
+
+const MAX_RESULT = 10;
+const BASE_URL = "https://www.googleapis.com/books/v1";
 
 const fetchData = async (term: string, pageParam) => {
   try {
     const response = await fetch(
-      `https://www.googleapis.com/books/v1/volumes?q=${term}&startIndex=${pageParam}&maxResults=10`
+      `${BASE_URL}/volumes?q=${term}&startIndex=${pageParam}&maxResults=${MAX_RESULT}`
     );
     return response.json();
   } catch (error) {
@@ -26,7 +25,9 @@ export const useSearchBook = (
     ({ pageParam = 0 }) => fetchData(term, pageParam),
     {
       getNextPageParam: (lastPage, allPages) => {
-        return lastPage.items.length ? allPages.length + 1 : undefined;
+        return lastPage.items?.length
+          ? allPages.length * MAX_RESULT + 1
+          : undefined;
       },
       ...options,
     }
