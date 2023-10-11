@@ -20,7 +20,7 @@ describe("SearchInput suite", () => {
     );
     const inputElement = getByPlaceholderText(/Pesquise um livro/i);
     fireEvent.change(inputElement, { target: { value: "Teste" } });
-
     expect(onChangeEvent).toHaveBeenCalledTimes(1);
+    expect(onChangeEvent.mock.calls[0][0].target.value).toEqual("Teste");
   });
 });

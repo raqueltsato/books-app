@@ -1,13 +1,9 @@
-import { Container, InputSearch } from "./styles";
+import { InputSearch } from "./styles";
 
 const SearchInput = ({
   onChange,
 }: React.InputHTMLAttributes<HTMLInputElement>) => {
-  return (
-    <Container>
-      <InputSearch placeholder="Pesquise um livro" onChange={onChange} />
-    </Container>
-  );
+  return <InputSearch placeholder="Pesquise um livro" onChange={onChange} />;
 };
 
 export default SearchInput;
