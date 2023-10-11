@@ -7,7 +7,7 @@ const BooksList = ({ items }: { items: BooksResponse["items"] }) => {
     <>
       <ListContainer>
         {items?.map(({ id, volumeInfo }) => (
-          <BookCard volumeInfo={volumeInfo} />
+          <BookCard key={id} volumeInfo={volumeInfo} />
         ))}
       </ListContainer>
     </>
