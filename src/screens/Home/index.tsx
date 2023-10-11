@@ -55,7 +55,9 @@ const Home = () => {
     <Container>
       <SearchInput onChange={(e) => setTerm(e.target.value)} />
       {renderBody}
-      {!!newData.length && <Button onClick={fetchNextPage}>Clique aqui</Button>}
+      {!!newData.length && (
+        <Button onClick={fetchNextPage}>Carregar mais</Button>
+      )}
     </Container>
   );
 };

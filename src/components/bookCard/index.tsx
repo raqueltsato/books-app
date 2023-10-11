@@ -1,5 +1,6 @@
 import { BookItemResponse } from "../../services/books/types";
 import { CardContainer, SubTitle, Title } from "./styles";
+import Thumbnail from "../../assets/Thumbnail.png";
 
 const BookCard = ({
   volumeInfo,
@@ -9,7 +10,7 @@ const BookCard = ({
   const { title, publishedDate, imageLinks } = volumeInfo;
   return (
     <CardContainer>
-      {imageLinks?.smallThumbnail && <img src={imageLinks.smallThumbnail} />}
+      <img src={imageLinks?.smallThumbnail || Thumbnail} />
       <Title>{title}</Title>
       <SubTitle>{publishedDate}</SubTitle>
     </CardContainer>

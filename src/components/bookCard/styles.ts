@@ -14,6 +14,7 @@ export const Title = styled.p`
   color: black;
   font-weight: bold;
   text-align: center;
+  margin-top: 8px;
 `;
 
 export const SubTitle = styled.p`
