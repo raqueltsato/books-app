@@ -6,26 +6,25 @@ import { BookImage, Button, Container } from "./styles";
 import BooksList from "../../components/booksList";
 import lottie from "../../assets/lottie.json";
 import useDebounce from "../../hooks";
+import { BookItemResponse } from "../../services/books/types";
 
 const Home = () => {
   const [term, setTerm] = useState("");
   const debouncedSearchQuery = useDebounce(term, 600);
 
-  const {
-    data,
-    isLoading,
-    fetchNextPage,
-    refetch,
-    hasNextPage,
-    isFetchingNextPage,
-  } = useSearchBook(debouncedSearchQuery, {
-    enabled: !!debouncedSearchQuery,
-  });
+  const { data, isLoading, fetchNextPage, refetch } = useSearchBook(
+    debouncedSearchQuery,
+    {
+      enabled: !!debouncedSearchQuery,
+    }
+  );
 
   const newData = useMemo(
     () =>
-      data?.pages.reduce((acc, current) => [...acc, ...current.items], []) ||
-      [],
+      data?.pages.reduce(
+        (acc: BookItemResponse[], current) => [...acc, ...current.items],
+        []
+      ) || [],
     [data?.pages]
   );
 
@@ -56,7 +55,7 @@ const Home = () => {
       <SearchInput onChange={(e) => setTerm(e.target.value)} />
       {renderBody}
       {!!newData.length && (
-        <Button onClick={fetchNextPage}>Carregar mais</Button>
+        <Button onClick={() => fetchNextPage()}>Carregar mais</Button>
       )}
     </Container>
   );

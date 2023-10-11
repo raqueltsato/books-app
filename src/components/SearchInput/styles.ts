@@ -1,11 +1,8 @@
 import { styled } from "styled-components";
 
-export const Container = styled.div`
+export const InputSearch = styled.input`
   margin: 30px;
   width: 80%;
-`;
-
-export const InputSearch = styled.input`
   background-color: #f1f7fc;
   border: 1px solid #c3bef0;
   outline: #cca8e9;

@@ -5,7 +5,7 @@ import { BooksResponse } from "./types";
 const MAX_RESULT = 10;
 const BASE_URL = "https://www.googleapis.com/books/v1";
 
-const fetchData = async (term: string, pageParam) => {
+const fetchData = async (term: string, pageParam: number) => {
   try {
     const response = await fetch(
       `${BASE_URL}/volumes?q=${term}&startIndex=${pageParam}&maxResults=${MAX_RESULT}`
